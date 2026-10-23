@@ -1,0 +1,40 @@
+# Photo Style Studio
+
+将原始摄影作品制作成具有编辑设计风格的视觉作品的 Agent Skill。当前包含 **Geo Editorial / 地理旅行志** 分支。
+
+这是供兼容 Agent Skills 的助手读取的工作流包，不是独立图片处理应用，也不内置地图服务或模型。执行时需要可读取图片、获取地理数据、渲染矢量并进行透明图层合成的环境。工具不足时会说明缺口，不以整图重绘冒充保真合成。
+
+## 目录与安装
+
+将 `skills/photo-style-studio/` 整个目录复制到你的助手支持的 skills 目录；不要只复制 SKILL.md。仓库根目录保留用于说明与验证，不需要安装。
+
+```text
+skills/photo-style-studio/
+  SKILL.md
+  references/
+    geo-editorial.md
+    delivery-contract.md
+    branch-contract.md
+tests/
+  scenarios.md
+```
+
+## 使用
+
+上传原片并说明：
+
+> 使用 $photo-style-studio，把这张照片做成地理旅行志风格。拍摄地点是杭州，仅知道城市，没有 GPS。保持原图完整，使用真实地图独立叠加。
+
+可另附参考图并明确“这是风格参考，不是原片”。生成前会询问地图位置：左上、右上、左下、右下、自定义区域或自动安排；已明确选择则不重复询问，不默认右上角。只有城市信息时输出区域标记；无法确认地图所需地点时会先询问。
+
+默认交付原比例无损 PNG、同尺寸透明叠层、分层素材及来源说明。不会自动发布、上传原片或公开精确 GPS。
+
+## 后续整合
+
+每个新分支放入 `references/<branch-id>.md`，遵循 `references/branch-contract.md`，再更新 SKILL.md 的分支表。当前不包含尚未提供的风格分支。
+
+本地验证用例见 `tests/scenarios.md`。本仓库尚未进行真实照片与在线地图的端到端试制；文本场景检查不等于视觉质量验证。
+
+## 发布范围
+
+此仓库保存持续整合中的 skill 源文件。没有将用户照片、参考图、GPS 或第三方地图数据打包进来。公开复用许可证待作者发布时选择；地图与字体许可须分别核实。
