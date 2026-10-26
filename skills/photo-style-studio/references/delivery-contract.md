@@ -2,6 +2,14 @@
 
 每次任务使用独立输出目录。根据分支执行以下交付要求，不交叉套用。
 
+## 纸上摄影拼贴分支 paper-photo-collage
+
+- 成品使用工具实际输出格式，记录尺寸；默认竖版 3:5 或用户指定画布。原景不拉伸，输出不要求等于原片尺寸。
+- `prompt.txt` 保存实际提示词，包括确定的边缘模式、画幅、精确标题或无文字要求。
+- `manifest.json` 记录 branch、preservation=subject-faithful、source_filename、source_size、output_size、canvas_mode、edge_treatment、paper_tone、caption_mode、caption_text、season_policy、generation_method、outputs、checks。可取得时记录源文件哈希，不包含未经允许披露的原始 EXIF。
+- checks 用 pass / fail / not_run 及证据记录：源文件未覆盖、主体比例与空间关系、人物数量动作、核心摄影质感、边缘绘画过渡、季节天气光向、纸面留白、标题拼写与排版。无人或无标题时对应项记 not_run 并注明不适用。
+- 分层文件仅在实际生成时交付；无须透明地图层、地图来源或逐像素一致报告。工具不可用时说明未生成。模型未精确遵循目标比例时记录实际比例，不静默拉伸补救。
+
 ## 水彩分支 luminous-watercolor
 
 - `final.png` 或工具实际输出的原生图片：展示成品，保持原比例，记录实际尺寸与格式；不把 JPEG 改后缀冒充 PNG。
