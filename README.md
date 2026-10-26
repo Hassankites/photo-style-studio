@@ -4,7 +4,7 @@
 
 上传摄影原片，选择风格，助手按对应分支处理。这是 Agent Skill 工作流，不是独立修图应用，也不内置图像模型或地图服务。
 
-> **实际效果展示**：以下两张成品于 2026-10-26 按对应分支制作，并经用户选定用于演示。只展示成品，不包含原片或此前的风格参考图。
+> **实际效果展示**：以下两组成品于 2026-10-26 按对应分支制作，经用户授权与对应原片并排展示。点击图片可查看大图；不包含此前的风格参考图。
 
 ## 先选一种风格
 
@@ -20,7 +20,9 @@
 
 **照片是主角，地图为它补充地点与旅行感。**
 
-![赛里木湖地理旅行志成品：右上天空叠加真实湖岸轮廓](docs/images/sayram-lake-editorial.png)
+| 原片 | 地理旅行志成品 |
+| :---: | :---: |
+| [![赛里木湖原片](docs/images/sayram-lake-original.jpg)](docs/images/sayram-lake-original.jpg) | [![赛里木湖地理旅行志：右上天空叠加真实湖岸轮廓](docs/images/sayram-lake-editorial.png)](docs/images/sayram-lake-editorial.png) |
 
 *赛里木湖 · 右上天空独立透明叠层。红点表示湖区示意，不是精确拍摄位置。为避开山脊，本例缩小了地图布局。*
 
@@ -46,7 +48,9 @@
 
 **保留熟悉的场景，把光、树叶与水面变成透明叠染和细腻笔触。**
 
-![夏季景观水彩成品：蓝天、绿色树林、河道与彩色岩丘，满幅绘制](docs/images/summer-landscape-watercolor.png)
+| 原片 | 通透写实水彩成品 |
+| :---: | :---: |
+| [![夏季景观原片](docs/images/summer-landscape-original.jpg)](docs/images/summer-landscape-original.jpg) | [![夏季景观水彩：蓝天、绿色树林、河道与彩色岩丘](docs/images/summer-landscape-watercolor.png)](docs/images/summer-landscape-watercolor.png) |
 
 *夏季景观 · 满幅水彩。保留绿色植被、河道与岩丘的整体构图，以透明叠染、点染与干笔表现材质。*
 
@@ -85,7 +89,7 @@ skills/photo-style-studio/
     luminous-watercolor.md          # 通透写实水彩
     delivery-contract.md            # 各分支交付与验收
     branch-contract.md              # 后续风格扩展规范
-docs/images/                       # 两张实际演示成品
+docs/images/                       # 两组原片与成品对比
 tests/                             # 行为场景与验证记录
 ```
 
@@ -95,5 +99,5 @@ tests/                             # 行为场景与验证记录
 
 已进行格式、引用、打包一致性及文本场景检查，并完成上述两张实际试制。地理成品保持原尺寸，叠层未覆盖区域逐像素一致；水彩成品已预览检查季节与整体构图。这是两张示例的验证结果，不代表所有输入均已测试。详情见 [验证记录](tests/validation-notes.md)。
 
-仓库仅包含用户选定的这两张演示成品，不包含原片及此前的参考照片。成品仅用于效果展示，不作为安装后的自动生成输入；用户授权展示不等于授予第三方任意复用权。代码与文档的公开复用许可证待作者选择，地图数据遵循上列许可。
+仓库包含用户授权展示的两张原片及对应演示成品，不包含此前的风格参考照片。图片仅用于效果对比，不作为安装后的自动生成输入；用户授权展示不等于授予第三方任意复用权。代码与文档的公开复用许可证待作者选择，地图数据遵循上列许可。
 
