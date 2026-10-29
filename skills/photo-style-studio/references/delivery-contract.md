@@ -42,3 +42,10 @@ checks 对每项记录 pass / fail / not_run 和简短证据：
 6. 图层尺寸一致，叠层确有透明通道，来源与许可说明齐全。
 
 给用户展示成品、可下载文件和位置精度说明。若有未运行检查，明确写出。成功交付不等于发布；不自动创建远程仓库或上传照片。
+
+## 分层剪纸浮雕 layered-paper-relief
+
+- 交付实际生成的成品与 `prompt.txt`；记录目标及实际尺寸，不把栅格图声称为可编辑纸层。
+- `manifest.json` 记录 branch、preservation=scene-faithful、source_filename、source_size、output_size、palette、relief_depth、season_policy、caption_mode、generation_method、outputs、checks；可取得时附源文件哈希，不公开原始 EXIF。
+- checks 使用 pass / fail / not_run 及证据，覆盖源文件未覆盖、比例构图、主体与人物关系、纸层厚度和接触阴影、全景纸材质、季节天气光影、无意外文字。无人时人物检查记 not_run 并注明不适用。
+- 工具不可用时明确仅交付提示词；检查未做或细节偏离时如实记录。
