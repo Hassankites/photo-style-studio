@@ -1,150 +1,143 @@
 # Photo Style Studio
 
-**一张原片，四种表达：地理旅行志、通透写实水彩、纸上摄影拼贴、分层剪纸浮雕。**
+**Turn your photographs into travel editorials, watercolor paintings, paper collages, or layered paper reliefs.**
 
-上传摄影原片，选择风格，助手按对应分支处理。这是 Agent Skill 工作流，不是独立修图应用，也不内置图像模型或地图服务。
+Upload a photo and choose a style. Photo Style Studio gives your AI assistant a workflow for making the edit and checking the result. You bring the assistant and its image tools; this repository supplies the instructions. No image model or map service is bundled.
 
-> **实际效果展示**：前三组成品于 2026-10-26 制作，第四组于 2026-10-29 试制并获用户选入，经用户授权与对应原片并排展示。点击图片可查看大图；不包含此前的风格参考图。
+The examples below pair original photographs with actual outputs. Click any image for a closer look.
 
-## 先选一种风格
+## Choose a style
 
-| | 地理旅行志 | 通透写实水彩 | 纸上摄影拼贴 | 分层剪纸浮雕 |
-| --- | --- | --- | --- | --- |
-| 最终观感 | 摄影作品＋透明细线地图 | 原场景转译成纸上水彩 | 摄影主体＋绘画边缘＋暖纸留白 | 全景纸层＋裁切边缘＋立体阴影 |
-| 处理方式 | 锁定原图，独立图层合成 | 全图绘画化重绘 | 核心保留摄影质感，外围局部绘画化 | 全景转译为哑光纸雕 |
-| 适合原片 | 有天空、海面等负空间的旅行摄影 | 建筑、湖景、园林与日常风景 | 有清晰主体、光影或倒影的摄影 | 山景、树林、建筑等层次清晰的原片 |
-| 输入与默认 | 地点、地图摆放区域 | 确认拍摄季节 | 默认竖版暖纸、自动边缘、小字标题 | 默认原比例、原片色系、无文字 |
-| 保留重点 | 原始像素、构图、色彩和光影 | 构图、主体、人物关系与季节 | 主体结构、摄影质感与可见季节 | 主要轮廓、空间层次、季节与光影 |
+| Style | Look | Best suited to | Starting choices |
+| --- | --- | --- | --- |
+| Geo Editorial | Photography with fine-line maps | Travel photos with open sky, water, or other negative space | Location and map placement |
+| Luminous Watercolor | Transparent washes and painterly detail | Architecture, gardens, lakes, and everyday landscapes | Season; painted edges or exposed paper |
+| Paper Photo Collage | A photographic center fading into paint and paper | Clear subjects, striking light, and reflections | Portrait layout, warm paper, small caption |
+| Layered Paper Relief | Overlapping paper shapes with visible depth | Mountains, woodland, and architecture | Original aspect ratio and palette, no text |
 
-## 01 地理旅行志 · Geo Editorial
+## 01 Geo Editorial
 
-**照片是主角，地图为它补充地点与旅行感。**
+Fine map lines and a few place names give a photograph the feel of a travel journal. The map sits in the scene's negative space, with no rectangular card behind it.
 
-| 原片 | 地理旅行志成品 |
+| Original | Geo Editorial |
 | :---: | :---: |
-| [![赛里木湖原片](docs/images/sayram-lake-original.jpg)](docs/images/sayram-lake-original.jpg) | [![赛里木湖地理旅行志：右上天空叠加真实湖岸轮廓](docs/images/sayram-lake-editorial.png)](docs/images/sayram-lake-editorial.png) |
+| [![Sayram Lake original](docs/images/sayram-lake-original.jpg)](docs/images/sayram-lake-original.jpg) | [![Sayram Lake with a shoreline map in the upper-right sky](docs/images/sayram-lake-editorial.png)](docs/images/sayram-lake-editorial.png) |
 
-*赛里木湖 · 右上天空独立透明叠层。红点表示湖区示意，不是精确拍摄位置。为避开山脊，本例缩小了地图布局。*
+*Sayram Lake. The transparent map overlay is scaled down to clear the ridgeline. The red dot identifies the lake area, not the camera's exact position.*
 
-地图轮廓来自 [OpenStreetMap relation 35887](https://www.openstreetmap.org/relation/35887)，© OpenStreetMap contributors，数据采用 [ODbL](https://www.openstreetmap.org/copyright) 许可。
+Shoreline data: [OpenStreetMap relation 35887](https://www.openstreetmap.org/relation/35887), © OpenStreetMap contributors, licensed under the [ODbL](https://www.openstreetmap.org/copyright).
 
-目标效果：地图透明且没有矩形底板，用细线条绘制，配上少量地名和小红点。地图融入负空间，避免遮挡主体。
+- **Choose the placement.** Pick a corner, describe a region, or let the assistant find a suitable space. It asks when placement has not been specified.
+- **Use real geography.** Streets, coastlines, and terrain must come from identifiable sources. A city name can support a regional marker, but never invented GPS coordinates.
+- **Keep the photo intact.** The base photo retains its framing, dimensions, color, and light. It is not cropped or repainted. Paper texture belongs to the added layers; pixels outside the overlay remain unchanged.
 
-- **位置由你选择**：四个角、自定义区域，或自动安排，不默认右上角。
-- **地图有真实依据**：按地点选择街道、海岸线或有来源的地形；只知城市时标注大致区域，不伪造 GPS。
-- **原片保持完整**：不裁切、不改天空、不整图重绘；纸感只作用于新增图层。
+Labels, lines, and the small red marker stay understated. Large headlines and extra decoration are left out.
 
-整体排版克制，不添加大面积标题或多余装饰；地图几何需核实。
+> Use $photo-style-studio to give this photo a Geo Editorial treatment. It was taken in Hangzhou, but I don't have GPS coordinates. Place the map in the upper-left corner and keep the original photo intact.
 
-**试着这样说：**
+**You get:** the finished image, a matching transparent overlay, the layer assets actually used, and notes on map sources and location accuracy.
 
-> 使用 $photo-style-studio，把这张照片做成地理旅行志风格。拍摄地点是杭州，仅知道城市，没有 GPS。地图放左上角，保持原图完整。
+[Geo Editorial workflow and prompt →](skills/photo-style-studio/references/geo-editorial.md)
 
-**交付**：原比例成品附同尺寸透明叠层与实际分层素材，并说明地图来源和位置精度。
+## 02 Luminous Watercolor
 
-[查看地理分支规则与提示词 →](skills/photo-style-studio/references/geo-editorial.md)
+Transparent washes, dry-brush marks, and small touches of pigment turn the scene into a watercolor painting. The composition stays familiar while individual details take on a painted character.
 
-## 02 通透写实水彩 · Luminous Watercolor
-
-**保留熟悉的场景，把光、树叶与水面变成透明叠染和细腻笔触。**
-
-| 原片 | 通透写实水彩成品 |
+| Original | Luminous Watercolor |
 | :---: | :---: |
-| [![夏季景观原片](docs/images/summer-landscape-original.jpg)](docs/images/summer-landscape-original.jpg) | [![夏季景观水彩：蓝天、绿色树林、河道与彩色岩丘](docs/images/summer-landscape-watercolor.png)](docs/images/summer-landscape-watercolor.png) |
+| [![Original summer landscape](docs/images/summer-landscape-original.jpg)](docs/images/summer-landscape-original.jpg) | [![Watercolor river, woodland, and colorful rock formations](docs/images/summer-landscape-watercolor.png)](docs/images/summer-landscape-watercolor.png) |
 
-*夏季景观 · 满幅水彩。保留绿色植被、河道与岩丘的整体构图，以透明叠染、点染与干笔表现材质。*
+*A summer landscape painted edge to edge, retaining the green vegetation, river, and overall arrangement of the rock formations.*
 
-本例使用内置图像生成工具转绘，输出为 1752 × 898，比例近似原片，未另行裁切或拉伸。绘画细节会变化，不承诺像素保真。
+This generative edit is 1752 × 898 pixels, close to the source aspect ratio. It was not cropped or stretched afterward. Fine details change during repainting.
 
-- **保留原有季节**：未说明时生成前询问；不确定则按原图可见特征，不擅自加秋叶、积雪或花朵。
-- **秋季不等于必须黄叶**：原片仍是绿树，就保留绿树；参考图的金黄调色不自动迁移。
-- **边缘可选**：默认满幅；明确选择纸边时，使用不规则水彩露白，不套矩形相框。
-- **绘画化而非像素保真**：允许重绘，重点验收构图、主体结构、人物数量与位置、天气和主要光向。
+- **Keep the season.** The assistant asks when the photo was taken if you have not said. If you are unsure, it follows what is visible in the photo.
+- **Follow the source foliage.** Green trees stay green, even in an autumn photograph. A golden reference image does not automatically turn the scene into fall foliage.
+- **Choose the edges.** The default fills the canvas. You can request irregular watercolor edges that expose the paper, without adding a rectangular frame.
+- **Check the scene.** Composition, subject structure, people and their positions, weather, and the main direction of light all matter. Pixel-for-pixel preservation is not part of this treatment.
 
-**试着这样说：**
+> Use $photo-style-studio to turn this photo into a luminous, realistic watercolor. It was taken in summer. Keep the season and paint all the way to the edges.
 
-> 使用 $photo-style-studio，把这张照片转成通透写实水彩。拍摄于夏季，保留原有季节，满幅绘制。
+For exposed paper, add: **“Use irregular watercolor edges, keeping the subject complete.”**
 
-选择纸边模式时，可以补充：**“使用不规则水彩纸边，保留主体完整。”**
+**You get:** the finished painting, the prompt used, and notes on the result. Map data and transparent map layers are not needed.
 
-**交付**：水彩成品、实际生成提示词与验证说明，无需地图数据或透明地图叠层。
+[Luminous Watercolor workflow and prompt →](skills/photo-style-studio/references/luminous-watercolor.md)
 
-[查看水彩分支规则与完整提示词 →](skills/photo-style-studio/references/luminous-watercolor.md)
+## 03 Paper Photo Collage
 
-## 03 纸上摄影拼贴 · Paper Photo Collage
+Photographic detail gives way to dry-brush marks, pigment, and loose linework at the edges. Warm ivory paper and asymmetric margins leave room for a small caption.
 
-**让照片从细腻的摄影主体，逐渐过渡成纸上的颜料、干刷与线稿。**
-
-| 原片 | 纸上摄影拼贴成品 |
+| Original | Paper Photo Collage |
 | :---: | :---: |
-| [![山景原片：云隙光照亮草坡与岩壁](docs/images/mountain-original.jpg)](docs/images/mountain-original.jpg) | [![纸上摄影拼贴：竖版暖纸、摄影山景与干刷线稿边缘，标题 Passing Light](docs/images/mountain-paper-collage.png)](docs/images/mountain-paper-collage.png) |
+| [![Original mountain photograph](docs/images/mountain-original.jpg)](docs/images/mountain-original.jpg) | [![Mountain collage on warm paper, captioned Passing Light](docs/images/mountain-paper-collage.png)](docs/images/mountain-paper-collage.png) |
 
-*Passing Light · 暖纸承载山景，核心保留摄影质感，外围融入干刷、颗粒与少量线稿。*
+*Passing Light. A photographic mountain scene meets dry-brush texture and sparse linework on warm paper.*
 
-本例采用生成式编辑，输出 972 × 1619，接近 3:5 竖版。暖纸、边缘与标题效果已体现，但山脊和云层细节存在变化，尚未严格做到原景等比嵌入；作为风格演示展示，不代表主体保真验收完全通过。
+This generative edit is 972 × 1619 pixels, close to a 3:5 portrait format. It demonstrates the paper, edge treatment, and caption, but some ridge and cloud details have changed. The scene was not placed with exact proportional fidelity, so this example is a style demonstration rather than a fully faithful composite.
 
-与第二类的整幅水彩不同，这一类保留核心区域的摄影细节，只在外围进行绘画化过渡。温暖象牙白纸底、不对称留白与一行小字形成纸面作品。
+- **Architecture:** broken outlines, light hatching, and patches of rubbed color around the edges.
+- **Trees and grass:** leaf-like pigment marks, light water blooms, and occasional dry-brush splashes.
+- **Water and reflections:** broken horizontal strokes that follow the ripples, with paper showing through.
+- **Layout:** a 3:5 portrait canvas by default. The intended method adds paper around a proportionally placed scene without stretching the subject. You can request the original aspect ratio instead.
+- **Caption:** a short English title by default. Supply your own or leave it out. Warm paper should not change the season shown in the photo.
 
-- **建筑场景**：边缘断续线稿、少量排线与色块擦印。
-- **树林草地**：叶簇式色斑、轻微水渍与局部干刷飞溅。
-- **湖面倒影**：顺着水波的横向断续笔触与露纸，保留倒影关系。
-- **默认竖版 3:5**：等比摆放照片、增加纸面留白，不拉伸主体；也可指定保留原比例。
-- **默认小字标题**：简短英文情绪标题，也可自定义或完全无字。季节保持原片，不把暖纸色变成秋色滤镜。
+> Use $photo-style-studio to make a paper photo collage. Keep the subject photographic and preserve the season. Use a portrait layout on warm paper, with edges fading into dry-brush marks and pigment. Add a small caption: Stillness.
 
-**试着这样说：**
+**You get:** the finished image, the prompt used, and notes on the layout, edge treatment, and checks. Editable layers are supplied only when they were actually created.
 
-> 使用 $photo-style-studio，把这张照片做成纸上摄影拼贴。保留摄影主体和原有季节，竖版暖纸，边缘自然融成干刷和色斑，小字标题用 Stillness。
+[Paper Photo Collage workflow and prompt →](skills/photo-style-studio/references/paper-photo-collage.md)
 
-**交付**：成品附实际提示词，说明所选画幅、边缘模式及验收结果；仅在实际分层制作时提供图层。
+## 04 Layered Paper Relief
 
-[查看第三分支规则与完整提示词 →](skills/photo-style-studio/references/paper-photo-collage.md)
+Hills, trees, and clouds become overlapping shapes of matte paper. Visible edges, subtle thickness, and small shadows between layers give the scene depth.
 
-## 04 分层剪纸浮雕 · Layered Paper Relief
-
-**把山坡、树林与云层变成有厚度的纸片，让原景获得纸雕的空间感。**
-
-| 原片 | 分层剪纸浮雕成品 |
+| Original | Layered Paper Relief |
 | :---: | :---: |
-| [![山景原片](docs/images/mountain-original.jpg)](docs/images/mountain-original.jpg) | [![分层剪纸浮雕：灰蓝云层、层叠山坡与纸剪树林](docs/images/mountain-layered-paper.png)](docs/images/mountain-layered-paper.png) |
+| [![Original mountain landscape](docs/images/mountain-original.jpg)](docs/images/mountain-original.jpg) | [![Paper relief with slate-blue clouds, overlapping slopes, and cut-paper trees](docs/images/mountain-layered-paper.png)](docs/images/mountain-layered-paper.png) |
 
-*用户选定的 C 方案 · 全景统一为哑光纸材质，裁切边缘与轻微接触阴影表现层次。*
+*The whole landscape is rendered as paper, with cut edges and gentle contact shadows separating the layers.*
 
-默认保留原片比例、可见季节和主要光影，从原片提取色板，不加标题。与第三类保留摄影核心不同，本分支整体纸雕化。允许简化岩壁、树群与云层细节，不保证逐像素或精确几何一致。此图为生成式纸雕效果模拟，不是可编辑分层文件或实体制作图。
+The default keeps the original aspect ratio, draws its palette from the photo, and preserves the visible season and main lighting pattern. No text is added. Rock faces, tree groups, and clouds may be simplified; exact geometry and pixel fidelity are not guaranteed. The result is a generated image of a paper relief, not an editable layer stack or a physical cutting template.
 
-> 使用 $photo-style-studio，把这张照片做成分层剪纸浮雕。保留原比例、原有季节和光影，使用原片色系，无文字。
+> Use $photo-style-studio to turn this photo into a layered paper relief. Keep the original aspect ratio, season, and lighting. Use colors from the photo and leave out any text.
 
-**交付**：成品附实际提示词，并说明参数与验收结果。
+**You get:** the finished image, the prompt used, and notes on settings and checks.
 
-[查看第四分支规则与完整提示词 →](skills/photo-style-studio/references/layered-paper-relief.md)
+[Layered Paper Relief workflow and prompt →](skills/photo-style-studio/references/layered-paper-relief.md)
 
-## 安装与使用
+## Installation and use
 
-1. 将 `skills/photo-style-studio/` 整个目录复制到助手支持的 skills 目录，不要只复制 `SKILL.md`。
-2. 上传原片，说明想要的风格；如另附参考图，明确注明“这是风格参考”。
-3. 回答对应分支的必要问题，助手执行处理并检查结果。
+1. Copy the entire `skills/photo-style-studio/` folder into your assistant's supported skills directory. Include the reference files, not just `SKILL.md`.
+2. Upload your original photo and name the style you want. Label any additional images as style references.
+3. Answer any questions needed for that style, then let the assistant create and check the result.
 
-地理分支需要能获取地图、渲染矢量并进行透明合成的工具；水彩、纸上摄影拼贴与分层剪纸浮雕需要支持原图编辑的图像工具。工具不足时会说明缺口，不将提示词或设计方案冒充已生成成品。
+Geo Editorial requires access to map data, vector rendering, and transparent compositing. The other three styles require an image tool that can edit from a reference photo. If the tools are unavailable, the assistant should explain what is missing and provide a prompt or plan without claiming to have made an image.
 
-## 文件与扩展
+This README is in English. The detailed skill instructions and most supporting documentation are currently in Chinese.
+
+## Repository layout
 
 ```text
 skills/photo-style-studio/
-  SKILL.md                         # 风格入口
+  SKILL.md                         # Style selection and shared rules
   references/
-    geo-editorial.md                # 地理旅行志
-    luminous-watercolor.md          # 通透写实水彩
-    paper-photo-collage.md          # 纸上摄影拼贴
-    layered-paper-relief.md         # 分层剪纸浮雕
-    delivery-contract.md            # 各分支交付与验收
-    branch-contract.md              # 后续风格扩展规范
-docs/images/                       # 四组原片与成品对比（山景原片复用）
-tests/                             # 行为场景与验证记录
+    geo-editorial.md                # Geographic editorial treatment
+    luminous-watercolor.md          # Realistic watercolor
+    paper-photo-collage.md          # Photography on warm paper
+    layered-paper-relief.md         # Cut-paper relief
+    delivery-contract.md            # Outputs and checks for each style
+    branch-contract.md              # Guidelines for adding styles
+docs/images/                       # Four comparisons using three source photos
+tests/                             # Behavior scenarios and validation notes
 ```
 
-追加新风格时遵循 [分支接口](skills/photo-style-studio/references/branch-contract.md)，保持不同分支的保真要求独立。
+To add a style, follow the [branch contract](skills/photo-style-studio/references/branch-contract.md). Keep its preservation requirements separate from those of the existing styles.
 
-## 验证与素材说明
+## Validation and image use
 
-已检查格式与引用，核对打包一致性，并进行文本场景检查，完成上述四张实际试制。地理成品保持原尺寸，叠层未覆盖区域逐像素一致；水彩成品已预览检查季节与整体构图；纸上摄影拼贴已展示媒介效果，主体几何保真仍有改进空间。剪纸预览体现纸层厚度、接触阴影与全景纸材质，树群和岩壁细节有所简化。这是四张示例的验证结果，不代表所有输入均已测试。详情见 [验证记录](tests/validation-notes.md)。
+Checks cover skill formatting, links, package consistency, and selected text-based scenarios. The first three image examples were made on October 26, 2026; the paper relief was made on October 29, 2026. All four were approved for display alongside their source photographs.
 
-仓库包含用户授权展示的三张原片及四张演示成品，不包含此前的风格参考照片。图片仅用于效果对比，不作为安装后的自动生成输入；用户授权展示不等于授予第三方任意复用权。代码与文档的公开复用许可证待作者选择，地图数据遵循上列许可。
+The geographic edit retains the source dimensions, and pixels outside the overlay were verified unchanged. The watercolor was visually checked for season and overall composition. The photo collage captures the intended materials but still has geometric differences from the source. The paper relief shows layers and shadows while simplifying trees and rock details. These findings apply to the examples shown, not to every possible input. See the [validation notes](tests/validation-notes.md).
+
+The repository includes three original photographs and four demonstration outputs shared with permission. Earlier style-reference images are not included. The examples are for comparison and are not used as automatic inputs after installation. Permission to display them does not grant unrestricted reuse. A reuse license for the code and documentation has not yet been chosen; the map data is subject to the license credited above.
